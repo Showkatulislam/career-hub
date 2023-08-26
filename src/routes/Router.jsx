@@ -5,12 +5,17 @@ import ViewDetails from "../Pages/ViewDetails/ViewDetails";
 import AppliedJob from "../Pages/AppliedJob/AppliedJob";
 import Statistic from "../Pages/Statistic/Statistic";
 import Block from "../Pages/block/Block";
+import Login from "../Pages/Login/Login";
+import Register from "../Pages/createUser/Register";
+import ErrorPage from "../Pages/ErrorPage";
+import PrivateRoute from "./PrivateRoute";
 
 
 export const router=createBrowserRouter([
     {
         path:'/',
         element:<Main></Main>,
+        errorElement:<ErrorPage></ErrorPage>,
         children:[
             {
                 path:"",
@@ -21,13 +26,19 @@ export const router=createBrowserRouter([
                 element:<ViewDetails></ViewDetails>
             },{
                 path:'appliedjob',
-                element:<AppliedJob></AppliedJob>
+                element:<PrivateRoute><AppliedJob></AppliedJob></PrivateRoute>
             },{
                 path:'statistic',
-                element:<Statistic></Statistic>
+                element:<PrivateRoute><Statistic></Statistic></PrivateRoute>
             },{
                 path:'block',
-                element:<Block></Block>
+                element:<PrivateRoute><Block></Block></PrivateRoute>
+            },{
+                path:"login",
+                element:<Login></Login>
+            },{
+                path:'register',
+                element:<Register></Register>
             }
         ]
     }

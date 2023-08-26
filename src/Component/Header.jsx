@@ -1,9 +1,20 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
 import { useState } from "react";
+import GetAuthData from "../hooks/authdata";
 
 const Header = () => {
   const [active, setActive] = useState(1);
+  const {user,LogOut}=GetAuthData()
+  const navigate=useNavigate();
+  const removeUser=()=>{
+    LogOut()
+    .then(()=>{
+      navigate("/")
+    }).catch((err)=>{
+      console.log(err.message);
+    })
+  }
   return (
     <div
       className="
@@ -45,6 +56,14 @@ const Header = () => {
           className={`${active == 3 ? "text-purple-400" : "black"}`}
         >
           <Link to="/block">Blog</Link>
+        </li>
+        <li
+          onClick={() => setActive(4)}
+          className={`${active == 3 ? "text-purple-400" : "black"}`}
+        >
+          {
+            user?.uid?<button onClick={removeUser} className="bg-transparent border-2 border-purple-400 rounded-lg px-2 hover:bg-slate-400">logOut</button>:<Link to="/login">Login</Link>
+          }
         </li>
       </div>
       <div>
